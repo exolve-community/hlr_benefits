@@ -1,0 +1,21 @@
+version: "3.8"
+
+services:
+  hlr_benefits:
+    build:
+      context: .
+    container_name: hlr_benefits
+    ports:
+      - "7002:7002"
+    environment:
+      - FLASK_ENV=production
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.hlr_benefits.rule=PathPrefix(`/hlr_benefits`)"
+      - "traefik.http.services.hlr_benefits.loadbalancer.server.port=7002"
+    networks:
+      - traefik_default
+
+networks:
+  traefik_default:
+    external: true
